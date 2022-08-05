@@ -10,7 +10,7 @@ function CompanyDetail() {
 
   useEffect(() => {
     getCompany(companyId).then(setCompany);
-  }, []);
+  }, [companyId]);
 
   return (
     <div>

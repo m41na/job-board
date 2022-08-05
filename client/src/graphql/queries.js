@@ -60,3 +60,48 @@ export async function getJobs() {
     const { jobs } = await request(GRAPHQL_URL, query);
     return jobs;
 }
+
+export async function createJob(input) {
+    const query = gql`
+        mutation createNewJob($input: CreateJobInput!){
+            job: createJob(input: $input) {
+                id
+            }
+        }
+    `;
+
+    const variables = { input };
+
+    const { job } = await request(GRAPHQL_URL, query, variables);
+    return job;
+}
+
+export async function updateJob(input) {
+    const query = gql`
+        mutation updateNewJob($input: UpdateJobInput!){
+            job: updateJob(input: $input) {
+                id
+            }
+        }
+    `;
+
+    const variables = { input };
+
+    const { job } = await request(GRAPHQL_URL, query, variables);
+    return job;
+}
+
+export async function deleteJob(jobId) {
+    const query = gql`
+        mutation deleteJobById($jobId: ID!){
+            deleteJob(jobId: $jobId){
+                id
+            }
+        }
+    `;
+
+    const variables = { jobId };
+
+    const { job } = await request(GRAPHQL_URL, query, variables);
+    return job;
+}

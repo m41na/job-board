@@ -13,5 +13,21 @@ export const resolvers = {
 
     Company: {
         jobs: (company) => Job.findAll((job) => job.companyId === company.id)
+    },
+
+    Mutation: {
+        createJob: (_root, { input }) => {
+            return Job.create(input)
+        },
+
+        updateJob: async (_root, { input }) => {
+            const job = await Job.findById(input.id);
+            console.log(`updating fields ${JSON.stringify(input)} in the job ${JSON.stringify(job)}`);
+            return Job.update({...job, ...input});
+        },
+
+        deleteJob: (_root, { jobId }) => {
+            return Job.delete(jobId);
+        }
     }
 }
