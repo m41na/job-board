@@ -1,6 +1,6 @@
 import { Job, Company } from "./db.js";
 
-export const rejectIf(condition){
+export function rejectIf(condition){
     if (condition) {
         throw new Error("Unauthorized");
     }

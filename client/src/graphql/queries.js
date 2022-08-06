@@ -1,3 +1,4 @@
+// import { gql } from '@apollo/client';
 import { request, gql } from 'graphql-request';
 import { getAccessToken } from '../auth';
 
@@ -104,7 +105,7 @@ export async function deleteJob(jobId) {
     `;
 
     const variables = { jobId };
-    
+
     const headers = { Authorization: `Bearer ${getAccessToken()}` };
     const { job } = await request(GRAPHQL_URL, query, variables, headers);
     return job;
