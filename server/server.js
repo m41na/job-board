@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server-express';
-import { readFile, readFileSync } from 'fs';
+import { readFileSync } from 'fs';
 import { resolvers } from './resolvers.js';
 import cors from 'cors';
 import express from 'express';
@@ -30,7 +30,14 @@ app.post('/login', async (req, res) => {
 
 // configure and start apollo server
 const typeDefs = readFileSync('./schema.graphql', 'utf8');
-const apollServer = new ApolloServer({ typeDefs, resolvers });
+const context = async ({ req }) => {
+  if(req.auth){
+    const user = await User.findById(req.auth.sub);
+    return { user };
+  }
+  return {};
+}
+const apollServer = new ApolloServer({ typeDefs, resolvers, context });
 await apollServer.start();
 apollServer.applyMiddleware({ app, path: '/graphql' })
 
